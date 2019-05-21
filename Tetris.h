@@ -48,7 +48,8 @@ class Tetris{
     void insereFiguraS(int c,int l,char id,int rotacao);
     void insereFiguraJ(int c,int l,char id,int rotacao);
     void insereFiguraL(int c,int l,char id,int rotacao);
-    Tetris & operator=(const Tetris teste);
+    Tetris(const Tetris &game);
+    Tetris & operator=(const Tetris &game);
     void realloclinha(int c,int l);
     ~Tetris();
     void preenche(); 

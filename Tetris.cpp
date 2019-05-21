@@ -44,7 +44,7 @@ Tetris::Tetris(int c){
     for(int cont=0;cont<coluna;cont++){
             jogo[cont][0]=' ';
     }
-    cout<<jogo[0][0]<<" "<<endl;
+    //cout<<jogo[0][0]<<" "<<endl;
 }
 Tetris::~Tetris(){
     delete [] alturas;
@@ -297,7 +297,7 @@ void Tetris::insereFiguraJ(int c,int l,char id,int rotacao){
     }
     if(rotacao==180){
         for(int linha=l,figl=1;linha>(l-2);linha--,figl--){
-            for(int cont=c,figc=0;cont<(4+c);cont++,figc++){
+            for(int cont=c,figc=3;cont<(4+c);cont++,figc--){
                 if(getAltura(cont)<l){
                     realloclinha(cont,l);
                 }
@@ -658,7 +658,7 @@ bool Tetris::adicionaForma(int c,int l,char id,int rotacao){
         }
         if(rotacao==90 || rotacao==270){
             bool inserivel=true;
-            if(l-3+1>=0 && c+1<coluna){
+            if(l-3>=0 && c+1<coluna){
                 for(int cont=c;cont<c+2;cont++){
                     if(l>=getAltura(cont)){//testa se todas as colunas possuem altura necessaria
                         inserivel=false;
@@ -716,7 +716,7 @@ bool Tetris::adicionaForma(int c,int l,char id,int rotacao){
         }
         if(rotacao==90 ||rotacao==270){
             bool inserivel=true;
-            if(l-3+1>=0 && c+1<coluna){
+            if(l-3>=0 && c+1<coluna){
                 for(int cont=c;cont<c+2;cont++){
                     if(l>=getAltura(cont)){//testa se todas as colunas possuem altura necessaria
                         inserivel=false;
@@ -804,18 +804,51 @@ void Tetris::removeLinhasCompletas(){
         }
     }
 }
-
- Tetris & Tetris::operator=(const Tetris game){
-    if(this==&game){
-        return *this;
-    }
-    this->coluna=game.coluna;
-    delete [] alturas;
+Tetris::Tetris(const Tetris &game){//cria com os dados do argumento
+    jogo=new char*[game.coluna];
+    coluna=game.getNumColunas();
     alturas=new int[coluna];
     for(int cont=0;cont<coluna;cont++){
         alturas[cont]=game.alturas[cont];
+    }    
+    for(int cont=0;cont<getNumColunas();cont++){//Passa os dados pro novo
+        jogo[cont]=new char[alturas[cont]];
+        for(int linha=0;linha<getAltura(cont);linha++){
+            jogo[cont][linha]=game.jogo[cont][linha];
+        }
     }
-    jogo=game.jogo;
+    //*this=game;
+}
+
+ Tetris & Tetris::operator=(const Tetris &game){
+    if(this==&game){
+        return *this;
+    }
+    delete [] alturas;
+    alturas=new int[game.coluna];
+    for(int cont=0;cont<game.coluna;cont++){
+        //cout<<"to dando novas alturas "<<game.alturas[cont]<<endl;
+        alturas[cont]=game.alturas[cont];
+    }
+    //cout<<"Colunas: "<<getNumColunas()<<game.getNumColunas()<<endl;
+    for(int cont=0;cont<getNumColunas();cont++){
+        delete [] jogo[cont];
+    }
+    delete [] jogo;
+
+
+    ////////////////////////Transerindo os dados do jogo
+    this->coluna=game.coluna;
+    jogo=new char*[coluna];
+    for(int cont=0;cont<getNumColunas();cont++){
+        jogo[cont]=new char[alturas[cont]];
+        for(int linha=0;linha<getAltura(cont);linha++){
+            jogo[cont][linha]=game.jogo[cont][linha];
+        }
+    }
+    //cout<<"Colunas: "<<getNumColunas()<<game.getNumColunas()<<endl;
+
+    ////////////////////////////////////////////////////////////////////////////
     return *this;
  }
 
