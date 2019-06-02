@@ -93,7 +93,7 @@ int main() {
 			jogo = jogoComPecaCaindo;	
 		}
 
-		exibeJogo(jogo,larguraJogo,alturaMaximaJogo);
+		exibeJogo(jogoComPecaCaindo,larguraJogo,alturaMaximaJogo);
 		
 
 		

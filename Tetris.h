@@ -5,8 +5,8 @@
 class Tetris{
     private:
             char **jogo;
-            int coluna;
-            int *alturas;
+            int coluna;//numero de colunas
+            int *alturas;//Vetor que representa as alturas do jogo
             char i[4][1]={{'I'},
                         {'I'},
                         {'I'},
@@ -44,15 +44,13 @@ class Tetris{
     void insereFiguraT(int c,int l,char id,int rotacao);
     void insereFiguraO(int c,int l,char id,int rotacao);
     void insereFiguraI(int c,int l,char id,int rotacao);
-    void insereFiguraZ(int c,int l,char id,int rotacao);
-    void insereFiguraS(int c,int l,char id,int rotacao);
+    void insereFiguraZS(int c,int l,char id,int rotacao);
     void insereFiguraJ(int c,int l,char id,int rotacao);
     void insereFiguraL(int c,int l,char id,int rotacao);
     Tetris(const Tetris &game);
     Tetris & operator=(const Tetris &game);
     void realloclinha(int c,int l);
     ~Tetris();
-    void preenche(); 
 
 };
 
